@@ -113,7 +113,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               _confirmPasswordController.text;
                           user.password = _passwordController.text;
                           HttpRepository().registerUser();
-                          print("kek");
                           setState(() {
                             _isCompleted = true;
                           });
