@@ -1,5 +1,6 @@
 import "package:bonkbonk/imports.dart";
 import 'package:bonkbonk/screens/register.dart';
+import 'package:bonkbonk/widgets/logo.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -19,8 +20,15 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(title: Text("bonk-bonk")),
       body: Center(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          // mainAxisSize: MainAxisSize.min,
           children: [
+            SizedBox(
+              height: 100,
+            ),
+            BonkLogo(),
+            SizedBox(
+              height: 50,
+            ),
             Container(
               width: 200,
               child: TextFormField(
@@ -38,6 +46,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 controller: _passwordController,
               ),
+            ),
+            SizedBox(
+              height: 12,
             ),
             OutlinedButton(
               onPressed: () {},
