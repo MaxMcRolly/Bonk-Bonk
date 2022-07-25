@@ -1,6 +1,7 @@
 import 'package:bonkbonk/http_repository.dart';
 import "package:bonkbonk/imports.dart";
 import 'package:bonkbonk/widgets/logo.dart';
+import 'package:http/http.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -103,7 +104,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 physics: NeverScrollableScrollPhysics(),
                 onStepTapped: null,
                 onStepContinue: _isCurrentStepComplete()
-                    ? () {
+                    ? () async {
                         if (_currentStep == getSteps().length - 1) {
                           user.name = _nameController.text;
                           user.surname = _surnameController.text;
@@ -112,10 +113,36 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           user.confirmPassword =
                               _confirmPasswordController.text;
                           user.password = _passwordController.text;
-                          HttpRepository().registerUser();
-                          setState(() {
-                            _isCompleted = true;
-                          });
+                          Response response =
+                              await HttpRepository().registerUser();
+                          response.statusCode == 201
+                              ? () {
+                                  setState(() {
+                                    _isCompleted = true;
+                                  });
+                                }()
+                              : () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          // content: Text(
+                                          //     "Ошибка при регистрации. Попробуйте, пожалуйста, позже.")));
+                                          content: Text(
+                                              "${response.statusCode}:${response.body}")));
+                                }();
+                        } else if (_currentStep == 0) {
+                          await HttpRepository().checkLoginAvailability(
+                                  username: _loginController.text)
+                              ? () {
+                                  setState(() {
+                                    _currentStep += 1;
+                                  });
+                                }()
+                              : () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              "Этот логин занят. Выберите, пожалуйста, другой.")));
+                                }();
                         } else {
                           setState(() {
                             _currentStep += 1;
