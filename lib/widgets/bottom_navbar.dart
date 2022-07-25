@@ -46,7 +46,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
 
   void _onItemTapped(int index) {
-    widget.pageController.jumpToPage(index);
+    // widget.pageController.jumpToPage(index);
+    widget.pageController.animateToPage(index,
+        duration: Duration(milliseconds: 200), curve: Curves.easeIn);
     context.read<PageViewCubit>().changeCurrentIndex(index);
   }
 }
