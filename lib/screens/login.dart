@@ -4,6 +4,7 @@ import 'package:bonkbonk/screens/home.dart';
 import 'package:bonkbonk/screens/register.dart';
 import 'package:bonkbonk/widgets/logo.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -32,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           // mainAxisSize: MainAxisSize.min,
           children: [
+            Text("v1.0.0+2"),
             SizedBox(
               height: 100,
             ),
@@ -62,14 +64,18 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             OutlinedButton(
               onPressed: () async {
-                await HttpRepository().loginUser(
+                Response response = await HttpRepository().loginUser(
                   login: _loginController.text,
                   password: _passwordController.text,
-                )
+                );
+                response.statusCode == 200
                     ? Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => HomeScreen()))
                     : ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Неверные логин/пароль")));
+                        // SnackBar(content: Text("Неверные логин/пароль")));
+                        SnackBar(
+                            content: Text(
+                                "${response.statusCode}:${response.body}")));
                 // : showDialog(
                 //     context: context,
                 //     builder: ((context) => AlertDialog(
