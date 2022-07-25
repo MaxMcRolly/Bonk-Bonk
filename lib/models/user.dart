@@ -1,6 +1,7 @@
 import "package:bonkbonk/imports.dart";
 
 User user = User();
+String? authToken;
 
 class User {
   late String? username;
@@ -17,7 +18,6 @@ class User {
     name = json["first_name"];
     surname = json["last_name"];
     elo = json["elo"];
-    token = json["token"];
   }
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
