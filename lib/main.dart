@@ -1,6 +1,17 @@
+import 'package:bonkbonk/http_repository.dart';
+import 'package:bonkbonk/screens/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import "imports.dart";
 
-void main() {
+late SharedPreferences localStorage;
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  localStorage = await SharedPreferences.getInstance();
+  authToken = localStorage.getString("token");
+  if (authToken != null) {
+    HttpRepository().getUserData();
+  }
   runApp(const MyApp());
 }
 
@@ -20,7 +31,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: LoginScreen(),
+        home: authToken == null ? LoginScreen() : HomeScreen(),
       ),
     );
   }
