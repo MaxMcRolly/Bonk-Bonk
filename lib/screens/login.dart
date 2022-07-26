@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:bonkbonk/http_repository.dart';
 import "package:bonkbonk/imports.dart";
 import 'package:bonkbonk/screens/home.dart';
@@ -64,18 +65,18 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             OutlinedButton(
               onPressed: () async {
-                Response response = await HttpRepository().loginUser(
+                String? error = await HttpRepository().loginUser(
                   login: _loginController.text,
                   password: _passwordController.text,
                 );
-                response.statusCode == 200
+                error == null
                     ? Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => HomeScreen()))
-                    : ScaffoldMessenger.of(context).showSnackBar(
-                        // SnackBar(content: Text("Неверные логин/пароль")));
-                        SnackBar(
-                            content: Text(
-                                "${response.statusCode}:${response.body}")));
+                    : Flushbar(
+                            flushbarPosition: FlushbarPosition.TOP,
+                            message: error,
+                            duration: Duration(seconds: 3))
+                        .show(context);
                 // : showDialog(
                 //     context: context,
                 //     builder: ((context) => AlertDialog(

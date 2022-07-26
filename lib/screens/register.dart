@@ -110,38 +110,32 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           user.surname = _surnameController.text;
                           user.password = _passwordController.text;
                           user.username = _loginController.text;
-                          user.confirmPassword =
-                              _confirmPasswordController.text;
                           user.password = _passwordController.text;
-                          Response response =
-                              await HttpRepository().registerUser();
-                          response.statusCode == 201
+                          String? error = await HttpRepository().registerUser();
+                          error == null
                               ? () {
                                   setState(() {
                                     _isCompleted = true;
                                   });
                                 }()
                               : () {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
                                           // content: Text(
                                           //     "Ошибка при регистрации. Попробуйте, пожалуйста, позже.")));
-                                          content: Text(
-                                              "${response.statusCode}:${response.body}")));
+                                          content: Text(error)));
                                 }();
                         } else if (_currentStep == 0) {
-                          await HttpRepository().checkLoginAvailability(
-                                  username: _loginController.text)
-                              ? () {
-                                  setState(() {
-                                    _currentStep += 1;
-                                  });
-                                }()
+                          String? error = await HttpRepository()
+                              .checkLoginAvailability(
+                                  username: _loginController.text);
+                          error == null
+                              ? setState(() {
+                                  _currentStep += 1;
+                                })
                               : () {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text(
-                                              "Этот логин занят. Выберите, пожалуйста, другой.")));
+                                      SnackBar(content: Text(error)));
                                 }();
                         } else {
                           setState(() {
