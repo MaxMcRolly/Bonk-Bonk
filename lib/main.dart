@@ -10,7 +10,7 @@ void main() async {
   localStorage = await SharedPreferences.getInstance();
   authToken = localStorage.getString("token");
   if (authToken != null) {
-    HttpRepository().getUserData();
+    await HttpRepository().getUserData();
   }
   runApp(const MyApp());
 }
@@ -27,12 +27,11 @@ class MyApp extends StatelessWidget {
             create: (context) => PageViewCubit(currentPageIndex: 0))
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-        ),
-        home: authToken == null ? LoginScreen() : HomeScreen(),
-      ),
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.green,
+          ),
+          home: authToken == null ? LoginScreen() : HomeScreen()),
     );
   }
 }
