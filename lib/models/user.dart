@@ -9,7 +9,6 @@ class User {
 
   late String? surname;
   late String? password;
-  late String? confirmPassword;
   late int? elo;
   late String? token;
   User();
@@ -24,8 +23,7 @@ class User {
     json["username"] = username;
     json["first_name"] = name;
     json["last_name"] = surname;
-    json["password1"] = password;
-    json["password2"] = confirmPassword;
+    json["password"] = password;
     return json;
   }
 }
