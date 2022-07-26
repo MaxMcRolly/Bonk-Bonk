@@ -1,6 +1,7 @@
 import "package:bonkbonk/imports.dart";
 import 'package:bonkbonk/screens/matches.dart';
 import 'package:bonkbonk/screens/profile.dart';
+import 'package:bonkbonk/screens/stats.dart';
 import 'package:bonkbonk/widgets/bottom_navbar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
           controller: homePageController,
           children: [
             MatchesScreen(),
+            StatisticsScreen(),
             ProfileScreen(),
           ],
         ),
