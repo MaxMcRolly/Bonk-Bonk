@@ -37,6 +37,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
           tooltip: 'Матчи',
         ),
         BottomNavigationBarItem(
+          icon: Icon(
+            Icons.leaderboard_outlined,
+          ),
+          label: 'Статистика',
+          tooltip: 'Статистика',
+        ),
+        BottomNavigationBarItem(
           icon: Icon(Icons.person_outline),
           label: 'Профиль',
           tooltip: 'Профиль',
