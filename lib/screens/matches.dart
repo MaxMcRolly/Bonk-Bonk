@@ -1,6 +1,7 @@
 import 'package:bonkbonk/http_repository.dart';
 import "package:bonkbonk/imports.dart";
 import 'package:bonkbonk/models/player.dart';
+import 'package:bonkbonk/screens/create_match.dart';
 import 'package:bonkbonk/widgets/my_match_card.dart';
 
 class MatchesScreen extends StatefulWidget {
@@ -34,7 +35,13 @@ class _MatchesScreenState extends State<MatchesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: () {}),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => MatchCreationScreen()));
+        },
+        child: Icon(Icons.add),
+      ),
       appBar: AppBar(
         title: Text("Матчи"),
         centerTitle: true,
