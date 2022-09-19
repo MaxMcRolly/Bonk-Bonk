@@ -3,13 +3,8 @@ import "package:bonkbonk/imports.dart";
 User user = User();
 String? authToken;
 
-class User {
-  late String? username;
-  late String? name;
-
-  late String? surname;
+class User extends Player {
   late String? password;
-  late int? elo;
   late String? token;
   User();
   User.fromJson(Map<String, dynamic> json) {
