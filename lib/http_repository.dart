@@ -33,11 +33,31 @@ class HttpRepository {
       user = User.fromJson(json.decode(response.body)["user"]);
       authToken = json.decode(response.body)["token"];
       localStorage.setString("token", authToken!);
+      localStorage.setString(
+          "expiration", json.decode(response.body)["expiry"]);
       return null;
     } else if (response.statusCode == 401) {
       return "Неверный логин или пароль";
     } else {
       return "${response.statusCode}: ${response.body}";
+    }
+  }
+
+  Future<bool> refreshToken() async {
+    String url = "https://bonk-bonk.herokuapp.com/api/auth/login/";
+    var response = await http
+        .post(Uri.parse(url), headers: {"Authorization": "Token ${authToken}"});
+    print(response.body);
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      user = User.fromJson(json.decode(response.body)["user"]);
+      authToken = json.decode(response.body)["token"];
+      localStorage.setString("token", authToken!);
+      localStorage.setString(
+          "expiration", json.decode(response.body)["expiry"]);
+      return true;
+    } else {
+      return false;
     }
   }
 
